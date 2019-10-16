@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">good-vibes</string>
+    <string name="textAPIbaseURL">API base URL</string>
+    <string name="textAPIHint">http://dill.com</string>
+    <string name="btnStartNewSesh">Start new sesh</string>
+    <string name="textSesh">Sesh 1</string>
+    <string name="textGameNum">Game 1</string>
+    <string name="textWin">Win</string>
+    <string name="textVibeValue">Vibe: 5</string>
+    <string name="btnSaveGame">Save game data</string>
+    <string name="btnEndSesh">End sesh</string>
+    <string name="textPlayTilLose">Play \'til lose</string>
 </resources>

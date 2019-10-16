@@ -1,59 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent"
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools">
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent">
 
     <TextView
-            android:text="Sesh 1"
+            android:text="@string/textSesh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textSesh" android:layout_marginTop="16dp"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            android:id="@+id/textSesh"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
             android:textSize="24sp"/>
+
     <TextView
-            android:text="Game 1"
+            android:text="@string/textGameNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textGameNum" app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/textSesh" android:textSize="18sp" android:textStyle="bold"/>
+            android:id="@+id/textGameNum"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/textSesh"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
     <TextView
-            android:text="Win"
+            android:text="@string/textWin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textWin"
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toStartOf="@+id/switchWin"
-            android:layout_marginTop="28dp" app:layout_constraintTop_toBottomOf="@+id/textGameNum"/>
+            android:layout_marginTop="28dp"
+            app:layout_constraintTop_toBottomOf="@+id/textGameNum"/>
+
     <Switch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/switchWin" app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginTop="24dp"
+            android:id="@+id/switchWin"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="24dp"
             app:layout_constraintTop_toBottomOf="@+id/textGameNum"/>
+
     <SeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/sliderVibe"
             android:max="10"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            android:layout_marginTop="24dp" app:layout_constraintTop_toBottomOf="@+id/switchWin"/>
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@+id/switchWin"/>
+
     <TextView
-            android:text="Vibe: 5"
+            android:text="@string/textVibeValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textVibeValue"
             android:max="10"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/sliderVibe" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"/>
+            app:layout_constraintTop_toBottomOf="@+id/sliderVibe"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="8dp"/>
 
     <Button
-            android:text="Save game data"
+            android:text="@string/btnSaveGame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btnSaveGame"
@@ -63,15 +88,19 @@
             android:layout_marginEnd="8dp"
             android:layout_marginTop="40dp"
             app:layout_constraintTop_toBottomOf="@+id/switchPlayTilLose"/>
+
     <Button
-            android:text="End sesh"
+            android:text="@string/btnEndSesh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btnEndSesh"
             android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@+id/btnSaveGame"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnSaveGame"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"/>
 
     <Switch
             android:layout_width="wrap_content"
@@ -85,7 +114,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textVibeValue"/>
 
     <TextView
-            android:text="Play 'til lose"
+            android:text="@string/textPlayTilLose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textPlayTilLose"
@@ -93,4 +122,5 @@
             android:layout_marginEnd="8dp"
             android:layout_marginTop="12dp"
             app:layout_constraintTop_toBottomOf="@+id/textVibeValue"/>
+
 </android.support.constraint.ConstraintLayout>

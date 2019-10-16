@@ -4,23 +4,28 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.app.AppCompatActivity
+import android.text.Html
 import android.util.Log
 import android.widget.SeekBar
 import android.widget.Toast
-import com.google.gson.GsonBuilder
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_sesh.*
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
-import kotlinx.serialization.list
+
 
 class SeshActivity : AppCompatActivity() {
 
     private lateinit var mSesh: Sesh
+    private lateinit var mEndpointBaseURL: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sesh)
+        this.title = Html.fromHtml("<font color=\"black\">good vibes :^)</font>", 0);
+
+        mEndpointBaseURL = intent.getStringExtra("url")
 
         val sharedPreferencesSesh = getSharedPreferences("PREFERENCE_SESH", Context.MODE_PRIVATE)
         mSesh = Sesh(sharedPreferencesSesh)
@@ -52,36 +57,53 @@ class SeshActivity : AppCompatActivity() {
     private fun createGame(): Game {
 
         fun Boolean.toInt() = if (this) 1 else 0
-
-        val win: Int = switchWin.isChecked.toInt()
+        val factor = 10
+        val win: Int = switchWin.isChecked.toInt() * factor
         val vibe: Int = sliderVibe.progress
-        val playtillose: Int = switchPlayTilLose.isChecked.toInt()
+        val playtillose: Int = switchPlayTilLose.isChecked.toInt() * factor
         return Game(mSesh.getSeshId(), mSesh.getGameCount(), win, vibe, playtillose)
     }
 
     private fun saveGameDataBtnPressed() {
         mSesh.saveGame(createGame())
         textGameNum.text = "Game " + mSesh.getGameCount()
-        Toast.makeText(this, "Game data sent!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Saved game", Toast.LENGTH_SHORT).show()
         Log.d("Sesh", mSesh.getSeshId())
+        switchPlayTilLose.isChecked = false
     }
 
     private fun endSeshBtnPressed() {
         mSesh.endSesh()
         postGames()
-        val intent = MainActivity.newIntent(this)
-        startActivity(intent)
-        finish()
+        val handler = Handler()
+        handler.postDelayed(Runnable {
+            val intent = MainActivity.newIntent(this)
+            startActivity(intent)
+            finish()
+        }, 2000)
     }
 
     private fun postGames() {
+        VibeUtils.showLoading(this)
+        mSesh.getGameList().forEach { game ->
+            postGameCall(game)
+        }
+        VibeUtils.hideLoading()
+    }
 
-        val json = Json(JsonConfiguration.Stable)
-
-        val jsonData = json.stringify(Game.serializer(), mSesh.getGameList().get(0))
-
-        val jsonList = json.stringify(Game.serializer().list, mSesh.getGameList())
-
+    @SuppressLint("CheckResult")
+    private fun postGameCall(game: Game) {
+        if (VibeUtils.isConnectedToInternet(this)) {
+            val observable = ApiService(mEndpointBaseURL).postGameAPICall().doPostGame(game)
+            observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({}, { error ->
+                    VibeUtils.showLongToast(this, error.message.toString())
+                }
+                )
+        } else {
+            VibeUtils.showLongToast(this, "No Internet Connection!")
+        }
     }
 
     companion object {

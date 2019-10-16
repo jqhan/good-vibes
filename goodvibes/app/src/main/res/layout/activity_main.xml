@@ -6,29 +6,42 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
+
     <TextView
-            android:text="API Endpoint"
+            android:text="@string/textAPIbaseURL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textEndpoint" app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp" app:layout_constraintTop_toTopOf="parent" android:textStyle="bold"/>
+            android:id="@+id/textAPIbaseURL"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textStyle="bold"/>
+
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:hint="http://dill.com"
+            android:hint="@string/textAPIHint"
             android:ems="10"
             android:id="@+id/editTextEndpoint"
             android:layout_marginStart="24dp"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/textEndpoint"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="24dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/textAPIbaseURL"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="24dp"/>
+
     <Button
-            android:text="Start new sesh"
+            android:text="@string/btnStartNewSesh"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btnStartSesh" android:layout_marginTop="32dp"
-            app:layout_constraintTop_toBottomOf="@+id/editTextEndpoint" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="40dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="40dp"
-    />
+            android:id="@+id/btnStartSesh"
+            android:layout_marginTop="32dp"
+            app:layout_constraintTop_toBottomOf="@+id/editTextEndpoint"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="40dp"
+            />
 </android.support.constraint.ConstraintLayout>
