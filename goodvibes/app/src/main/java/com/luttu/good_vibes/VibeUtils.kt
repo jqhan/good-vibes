@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.Window
 import android.widget.Toast
+import kotlinx.android.synthetic.main.dialog_transparent.*
 
 object VibeUtils {
 
@@ -16,13 +17,6 @@ object VibeUtils {
      * @param context
      * @action show progress loader
      */
-    fun showLoading(context: Context){
-        val dialog = Dialog(context, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false);
-        dialog.setContentView(R.layout.dialog_transparent)
-        dialog.show()
-    }
 
     /**
      * @action hide progress loader

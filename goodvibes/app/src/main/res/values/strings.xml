@@ -10,4 +10,6 @@
     <string name="btnSaveGame">Save game data</string>
     <string name="btnEndSesh">End sesh</string>
     <string name="textPlayTilLose">Play \'til lose</string>
+    <string name="textLoadingStatus">Sending sesh data..</string>
+    <string name="btnCancelDone">Cancel</string>
 </resources>

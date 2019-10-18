@@ -1,6 +1,7 @@
 package com.luttu.good_vibes
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,17 +9,20 @@ import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.text.Html
 import android.util.Log
+import android.view.Window
 import android.widget.SeekBar
 import android.widget.Toast
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_sesh.*
+import kotlinx.android.synthetic.main.dialog_transparent.*
 
 
 class SeshActivity : AppCompatActivity() {
 
     private lateinit var mSesh: Sesh
     private lateinit var mEndpointBaseURL: String
+    private lateinit var mDialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +56,7 @@ class SeshActivity : AppCompatActivity() {
             endSeshBtnPressed()
         }
 
+
     }
 
     private fun createGame(): Game {
@@ -74,21 +79,55 @@ class SeshActivity : AppCompatActivity() {
 
     private fun endSeshBtnPressed() {
         mSesh.endSesh()
+        showLoading()
+//        changeDialogLayoutToLoading()
         postGames()
-        val handler = Handler()
-        handler.postDelayed(Runnable {
-            val intent = MainActivity.newIntent(this)
-            startActivity(intent)
-            finish()
-        }, 2000)
+        changeDialogLayoutToDone()
+        hideLoading()
+    }
+
+
+    fun showLoading(){
+        mDialog = Dialog(this, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen)
+        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        mDialog.setCancelable(false);
+        mDialog.setContentView(R.layout.dialog_transparent)
+        mDialog.btnCancelDone.setOnClickListener{
+            cancelDoneBtnPressed()
+        }
+        mDialog.show()
+    }
+
+
+    fun hideLoading(){
+        mDialog.hide()
+    }
+
+    private fun cancelDoneBtnPressed() {
+        VibeUtils.hideLoading()
+        finishActivity()
     }
 
     private fun postGames() {
-        VibeUtils.showLoading(this)
         mSesh.getGameList().forEach { game ->
             postGameCall(game)
         }
-        VibeUtils.hideLoading()
+    }
+
+    private fun finishActivity() {
+        val intent = MainActivity.newIntent(this)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun changeDialogLayoutToLoading() {
+        textLoadingStatus.text = "Sending sesh data.."
+        btnCancelDone.text = "Cancel"
+    }
+
+    private fun changeDialogLayoutToDone() {
+        textLoadingStatus.text = "Sesh data has successfully been sent"
+        btnCancelDone.text = "OK"
     }
 
     @SuppressLint("CheckResult")
