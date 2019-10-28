@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.text.Html
 import android.util.Log
 import android.widget.SeekBar
@@ -52,6 +53,11 @@ class SeshActivity : AppCompatActivity() {
             endSeshBtnPressed()
         }
 
+        recyclerViewGameResults.apply {
+            layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = GameResultAdapter(mSesh.getGameList())
+        }
+
     }
 
     private fun createGame(): Game {
@@ -70,6 +76,7 @@ class SeshActivity : AppCompatActivity() {
         Toast.makeText(this, "Saved game", Toast.LENGTH_SHORT).show()
         Log.d("Sesh", mSesh.getSeshId())
         switchPlayTilLose.isChecked = false
+        recyclerViewGameResults.adapter?.notifyDataSetChanged()
     }
 
     private fun endSeshBtnPressed() {

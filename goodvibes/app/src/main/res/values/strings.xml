@@ -10,4 +10,8 @@
     <string name="btnSaveGame">Save game data</string>
     <string name="btnEndSesh">End sesh</string>
     <string name="textPlayTilLose">Play \'til lose</string>
+    <string name="btn_undo_game">Undo last game</string>
+    <string name="hashtag">&#35;</string>
+    <string name="race_flag">&#127937;</string>
+    <string name="play_til_lose">&#9995;</string>
 </resources>

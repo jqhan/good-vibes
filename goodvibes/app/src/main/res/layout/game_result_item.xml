@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gameResultItem"
+        android:orientation="vertical"
+        android:layout_marginEnd="4dp">
+
+    <TextView
+            android:id="@+id/textItemGameNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1" />
+
+    <ImageView
+            android:id="@+id/imageItemWinLose"
+            android:layout_width="20dp"
+            android:layout_height="25dp"
+            app:srcCompat="@drawable/win"
+            tools:ignore="ContentDescription" />
+
+    <TextView
+            android:id="@+id/textItemGameVibe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10" />
+
+    <TextView
+            android:id="@+id/textItemP2L"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:text="@string/play_til_lose"
+            android:textColor="#FFFFFF"
+            android:visibility="gone" />
+</LinearLayout>
