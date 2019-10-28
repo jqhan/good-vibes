@@ -8,19 +8,26 @@ import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Html
-import android.util.Log
+import android.view.View
 import android.widget.SeekBar
-import android.widget.Toast
+import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_sesh.*
+import java.math.RoundingMode
+import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 class SeshActivity : AppCompatActivity() {
 
     private lateinit var mSesh: Sesh
     private lateinit var mEndpointBaseURL: String
+    private var mTimerStartTime: Long = System.currentTimeMillis()
 
+    @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sesh)
@@ -62,6 +69,28 @@ class SeshActivity : AppCompatActivity() {
             adapter = GameResultAdapter(mSesh.getGameList())
         }
 
+        Flowable.interval(1000L, TimeUnit.MILLISECONDS)
+            .timeInterval()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                textStopWatchTime.text = getStopWatchString()
+            }
+
+    }
+
+    fun showHideGameResultRVSymbols(visibility: Int) {
+        textViewResultsGameNum.visibility = visibility
+        textViewResultsWinLose.visibility = visibility
+        imageViewMiky.visibility = visibility
+    }
+
+
+    fun getStopWatchString(): String {
+        val nowTime = System.currentTimeMillis()
+        val cast = nowTime - mTimerStartTime
+        val date = Date(cast)
+        val simpleDateFormat = SimpleDateFormat("mm:ss")
+        return simpleDateFormat.format(date)
     }
 
     private fun createGame(): Game {
@@ -77,6 +106,7 @@ class SeshActivity : AppCompatActivity() {
     private fun saveGameDataBtnPressed() {
         mSesh.saveGame(createGame())
         switchPlayTilLose.isChecked = false
+        mTimerStartTime = System.currentTimeMillis()
         updateUI()
     }
 
@@ -99,8 +129,17 @@ class SeshActivity : AppCompatActivity() {
     private fun updateUI() {
         textGameNum.text = "Game " + mSesh.getGameCount()
         recyclerViewGameResults.adapter?.notifyDataSetChanged()
+        if (mSesh.getGameList().isEmpty()) {
+            showHideGameResultRVSymbols(View.GONE)
+            textAverageVibe.visibility = View.GONE
+        } else {
+            showHideGameResultRVSymbols(View.VISIBLE)
+            textAverageVibe.visibility = View.VISIBLE
+            val df = DecimalFormat("##.##")
+            df.roundingMode = RoundingMode.CEILING
+            textAverageVibe.text = "average vibe: " + df.format(mSesh.getAverageVibe())
+        }
     }
-
 
     private fun postGames() {
         VibeUtils.showLoading(this)
@@ -134,4 +173,3 @@ class SeshActivity : AppCompatActivity() {
         }
     }
 }
-

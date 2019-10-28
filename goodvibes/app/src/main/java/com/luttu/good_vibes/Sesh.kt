@@ -1,7 +1,6 @@
 package com.luttu.good_vibes
 
 import android.content.SharedPreferences
-import kotlinx.serialization.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -26,11 +25,11 @@ class Sesh(sharedPreferencesSesh: SharedPreferences) {
     }
 
     fun clearOldSessions() {
-       mSharedPreferencesSesh.edit().clear().apply()
+        mSharedPreferencesSesh.edit().clear().apply()
     }
 
     fun removeLastAddedGame() {
-        mGameList.removeAt(mGameList.size-1)
+        if (mGameList.size >= 1) mGameList.removeAt(mGameList.size - 1)
     }
 
     fun endSesh() {
@@ -57,6 +56,15 @@ class Sesh(sharedPreferencesSesh: SharedPreferences) {
 
     fun getGameList(): List<Game> {
         return mGameList
+    }
+
+    // shouldn't be invoked if mGameList is empty
+    fun getAverageVibe(): Double {
+        var vibeSum: Int = 0
+        mGameList.forEach { game ->
+            vibeSum += game.vibe
+        }
+        return vibeSum.toDouble() / mGameList.size
     }
 
     companion object {

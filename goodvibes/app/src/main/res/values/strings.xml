@@ -14,4 +14,5 @@
     <string name="hashtag">&#35;</string>
     <string name="race_flag">&#127937;</string>
     <string name="play_til_lose">&#9995;</string>
+    <string name="hourglass">&#9203;</string>
 </resources>
