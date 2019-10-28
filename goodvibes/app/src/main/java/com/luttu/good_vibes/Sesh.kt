@@ -29,6 +29,9 @@ class Sesh(sharedPreferencesSesh: SharedPreferences) {
        mSharedPreferencesSesh.edit().clear().apply()
     }
 
+    fun removeLastAddedGame() {
+        mGameList.removeAt(mGameList.size-1)
+    }
 
     fun endSesh() {
         var editor = mSharedPreferencesSesh.edit()

@@ -53,6 +53,10 @@ class SeshActivity : AppCompatActivity() {
             endSeshBtnPressed()
         }
 
+        btnUndoGame.setOnClickListener {
+            undoGameBtnPressed()
+        }
+
         recyclerViewGameResults.apply {
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
             adapter = GameResultAdapter(mSesh.getGameList())
@@ -72,11 +76,8 @@ class SeshActivity : AppCompatActivity() {
 
     private fun saveGameDataBtnPressed() {
         mSesh.saveGame(createGame())
-        textGameNum.text = "Game " + mSesh.getGameCount()
-        Toast.makeText(this, "Saved game", Toast.LENGTH_SHORT).show()
-        Log.d("Sesh", mSesh.getSeshId())
         switchPlayTilLose.isChecked = false
-        recyclerViewGameResults.adapter?.notifyDataSetChanged()
+        updateUI()
     }
 
     private fun endSeshBtnPressed() {
@@ -89,6 +90,17 @@ class SeshActivity : AppCompatActivity() {
             finish()
         }, 2000)
     }
+
+    private fun undoGameBtnPressed() {
+        mSesh.removeLastAddedGame()
+        updateUI()
+    }
+
+    private fun updateUI() {
+        textGameNum.text = "Game " + mSesh.getGameCount()
+        recyclerViewGameResults.adapter?.notifyDataSetChanged()
+    }
+
 
     private fun postGames() {
         VibeUtils.showLoading(this)
